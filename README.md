@@ -1,0 +1,1 @@
+this is a very good and useful browser there is privacy anonymity pigeon will protect you is it safe yes it is safe if the system protects your computer and click execute in any case and our browser will be launched
