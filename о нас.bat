@@ -1,7 +1,6 @@
 @echo off
-title Pigeon Projects - About
+title About Pigeon Projects
 cls
-
 echo ************************************
 echo *       PIGEON PROJECTS            *
 echo *         about / about            *
