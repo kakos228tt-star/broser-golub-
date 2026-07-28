@@ -1,403 +1,403 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Game Hub</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Голубь Visuals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
+        /* ----- общие ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0d0d0d;
+            background: #020203;
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            background: #1a1a1a;
-            border-radius: 32px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 255, 150, 0.08);
-            border: 1px solid #2a2a2a;
-        }
-
-        /* HEADER */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #2a2a2a;
-            padding-bottom: 20px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: #00ff88;
-            border-radius: 16px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            font-weight: 900;
-            color: #0d0d0d;
         }
-
-        .logo h1 {
-            color: #ffffff;
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        /* затемнение фона как на plintusvisuals */
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+                        radial-gradient(circle at 70% 60%, rgba(56, 189, 248, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
-
-        .logo span {
-            color: #00ff88;
-        }
-
-        .badge {
-            background: #00ff88;
-            color: #0d0d0d;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-        }
-
-        /* MENU / TABS */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            background: #252525;
-            color: #aaaaaa;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .tab:hover {
-            background: #2f2f2f;
-            color: #ffffff;
-        }
-
-        .tab.active {
-            background: #00ff88;
-            color: #0d0d0d;
-            border-color: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
-        }
-
-        /* GAME GRID */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 24px;
-            margin-top: 10px;
-        }
-
-        .game-card {
-            background: #202020;
-            border-radius: 24px;
-            padding: 20px;
-            border: 1px solid #2c2c2c;
-            transition: 0.25s ease;
-            cursor: default;
-        }
-
-        .game-card:hover {
-            border-color: #00ff88;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 255, 136, 0.06);
-        }
-
-        .game-thumb {
+        /* карточка */
+        .glass {
+            position: relative;
+            z-index: 1;
+            background: rgba(8, 8, 9, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2.5rem 2rem;
+            max-width: 720px;
             width: 100%;
-            aspect-ratio: 16/9;
-            background: #2a2a2a;
-            border-radius: 16px;
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+            transition: opacity 0.5s ease;
+        }
+        /* спиннер — красный с крутилкой */
+        .spinner-wrap {
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 48px;
-            color: #444;
-            margin-bottom: 16px;
-            overflow: hidden;
-        }
-
-        .game-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .game-title {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .game-meta {
-            color: #888;
-            font-size: 13px;
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .game-meta span {
-            display: flex;
             align-items: center;
-            gap: 4px;
+            margin: 0 auto 1.8rem;
+            width: 72px;
+            height: 72px;
+            position: relative;
+        }
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-top: 4px solid #ef4444;
+            border-right: 4px solid #ef4444;
+            animation: spin 0.9s cubic-bezier(0.6, 0.0, 0.4, 1.0) infinite;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* тень под спиннером как релятивистский эффект */
+        .spinner-glow {
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, transparent 70%);
+            filter: blur(12px);
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { opacity: 0.4; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1.04); }
         }
 
-        .btn-download {
+        /* анимация появления (fade-up) как на оригинале */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            filter: blur(8px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* кнопки */
+        .btn-pigeon {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: #00ff88;
-            color: #0d0d0d;
-            font-weight: 700;
-            font-size: 15px;
-            padding: 10px 24px;
-            border-radius: 40px;
-            text-decoration: none;
-            transition: 0.2s;
-            border: none;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            font-weight: 600;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            transition: all 0.25s ease;
             cursor: pointer;
             width: 100%;
             justify-content: center;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
         }
-
-        .btn-download:hover {
-            background: #00dd77;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
-        }
-
-        /* FOOTER */
-        .footer {
-            margin-top: 40px;
-            padding-top: 24px;
-            border-top: 1px solid #2a2a2a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .footer a {
-            color: #00ff88;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .search-box {
-            background: #202020;
-            border: 1px solid #2c2c2c;
-            border-radius: 40px;
-            padding: 10px 20px;
+        .btn-pigeon:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: #ef4444;
             color: #fff;
-            width: 100%;
-            max-width: 280px;
-            outline: none;
-            font-size: 14px;
-            transition: 0.2s;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px -8px rgba(239, 68, 68, 0.25);
+        }
+        .btn-pigeon:active { transform: scale(0.97); }
+
+        /* сетка игр */
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 480px) {
+            .game-grid { grid-template-columns: 1fr; }
+            .glass { padding: 1.8rem 1.2rem; }
         }
 
-        .search-box:focus {
-            border-color: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.05);
+        /* заголовок */
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fca5a5 0%, #ef4444 60%, #b91c1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 20px; }
-            .header { flex-direction: column; align-items: start; gap: 12px; }
-            .logo h1 { font-size: 20px; }
-            .badge { font-size: 11px; }
-            .game-card { padding: 16px; }
+        /* подпись */
+        .meta {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1.5rem;
+            margin-top: 1.8rem;
+            text-align: center;
+        }
+        .meta span { color: rgba(239, 68, 68, 0.6); }
+
+        /* скрытые состояния */
+        .hidden-state {
+            display: none;
+        }
+
+        /* меню релятивистское — плавное появление */
+        .menu-appear {
+            animation: menuFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes menuFade {
+            0% { opacity: 0; transform: scale(0.97) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="bg-overlay"></div>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">🎮</div>
-            <h1>Game<span>Hub</span></h1>
+<div class="glass" id="app">
+    <!-- ===== ЭКРАН ЗАГРУЗКИ (спиннер + надпись) ===== -->
+    <div id="loaderScreen">
+        <div class="spinner-wrap">
+            <div class="spinner-glow"></div>
+            <div class="spinner"></div>
         </div>
-        <div class="badge">🔥 9 игр доступно</div>
+        <div class="text-center fade-up visible">
+            <div class="title text-3xl mb-1">Голубь Visuals</div>
+            <p class="text-white/40 text-sm tracking-wide">загрузка...</p>
+            <div class="mt-4 w-24 h-0.5 bg-white/5 mx-auto rounded-full overflow-hidden">
+                <div class="h-full w-0 bg-red-500/60 rounded-full" id="progressBar" style="width:0%;"></div>
+            </div>
+            <p class="text-white/20 text-xs mt-3" id="loadingTip">настраиваем голубиную магию</p>
+        </div>
     </div>
 
-    <!-- MENU / TABS (красивая менюшка) -->
-    <div class="tabs">
-        <button class="tab active" onclick="filterGames('all')">Все</button>
-        <button class="tab" onclick="filterGames('rpg')">RPG</button>
-        <button class="tab" onclick="filterGames('shooter')">Шутеры</button>
-        <button class="tab" onclick="filterGames('simulator')">Симуляторы</button>
-        <button class="tab" onclick="filterGames('horror')">Хорроры</button>
+    <!-- ===== ОСНОВНОЙ ИНТЕРФЕЙС (скрыт до окончания загрузки) ===== -->
+    <div id="mainScreen" class="hidden-state menu-appear">
+        <!-- шапка -->
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🕊️</span>
+                <span class="text-white/90 font-semibold text-lg tracking-tight">Голубь</span>
+            </div>
+            <span class="text-white/20 text-xs bg-white/5 px-3 py-1 rounded-full">v2.0</span>
+        </div>
+
+        <!-- приветствие -->
+        <div class="fade-up visible" style="transition-delay:0.05s;">
+            <h2 class="text-white/80 text-xl font-medium">🐦 Выбери игру</h2>
+            <p class="text-white/30 text-sm mt-0.5">кликни — и голубь покажет путь</p>
+        </div>
+
+        <!-- сетка игр -->
+        <div class="game-grid fade-up visible" style="transition-delay:0.15s;">
+            <button class="btn-pigeon" onclick="launchGame('clicker')">
+                <span>🖱️</span> Голубь-кликер
+            </button>
+            <button class="btn-pigeon" onclick="launchGame('snake')">
+                <span>🐍</span> Голубь-змейка
+            </button>
+            <button class="btn-pigeon" onclick="launchGame('pigeon')">
+                <span>🕊️</span> Полет голубя
+            </button>
+            <button class="btn-pigeon" onclick="launchGame('memory')">
+                <span>🧠</span> Голубиная память
+            </button>
+        </div>
+
+        <!-- диалог подтверждения (появляется при клике) -->
+        <div id="confirmBox" class="mt-5 p-4 rounded-2xl bg-white/5 border border-white/10 hidden-state menu-appear">
+            <p class="text-white/70 text-sm" id="confirmText">❓ Действительно хотите поиграть?</p>
+            <div class="flex gap-3 mt-3">
+                <button class="flex-1 py-2 rounded-full bg-red-500/20 text-red-300 text-sm font-medium hover:bg-red-500/30 transition" onclick="confirmGame(true)">✅ Да</button>
+                <button class="flex-1 py-2 rounded-full bg-white/5 text-white/40 text-sm font-medium hover:bg-white/10 transition" onclick="confirmGame(false)">❌ Нет</button>
+            </div>
+            <p class="text-white/20 text-xs text-center mt-2">⏳ автовыбор через <span id="countdownTimer">10</span> сек</p>
+        </div>
+
+        <!-- вывод результата (запуск игры) -->
+        <div id="gameResult" class="mt-4 text-center hidden-state">
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/5">
+                <p class="text-white/80 text-sm" id="resultMessage">🕊️ Запускаем...</p>
+                <div class="mt-3 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full w-0 bg-gradient-to-r from-red-400 to-red-600 rounded-full" id="gameProgress" style="width:0%;"></div>
+                </div>
+                <button onclick="resetToMenu()" class="mt-4 text-white/30 text-xs hover:text-white/60 transition">← вернуться в меню</button>
+            </div>
+        </div>
+
+        <!-- мета -->
+        <div class="meta">
+            <span>🕊️</span> голубиный релятивизм · <span>эстетика</span> · 0% читов
+        </div>
     </div>
-
-    <!-- ПОИСК -->
-    <input class="search-box" id="searchInput" placeholder="🔍 Поиск игры..." oninput="searchGames()">
-
-    <!-- GRID -->
-    <div class="games-grid" id="gameGrid">
-        <!-- Карточки заполняются через JS -->
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <span>© 2026 GameHub — только безопасные .rbxl файлы</span>
-        <span>⬇️ Все игры проверены на вирусы</span>
-    </div>
-
 </div>
 
 <script>
-    // Список игр (добавляй свои файлы в папку /games/)
-    const games = [
-        {
-            id: 1,
-            title: "Приключение в лесу",
-            genre: "rpg",
-            size: "420 МБ",
-            downloads: "1.2K",
-            file: "games/game1.rbxl",
-            thumb: "🌲"
-        },
-        {
-            id: 2,
-            title: "Городской боевик",
-            genre: "shooter",
-            size: "680 МБ",
-            downloads: "3.4K",
-            file: "games/game2.rbxl",
-            thumb: "🔫"
-        },
-        {
-            id: 3,
-            title: "Ферма онлайн",
-            genre: "simulator",
-            size: "310 МБ",
-            downloads: "856",
-            file: "games/game3.rbxl",
-            thumb: "🌾"
-        },
-        {
-            id: 4,
-            title: "Заброшенный особняк",
-            genre: "horror",
-            size: "550 МБ",
-            downloads: "2.1K",
-            file: "games/game4.rbxl",
-            thumb: "👻"
-        },
-        {
-            id: 5,
-            title: "Королевство драконов",
-            genre: "rpg",
-            size: "1.2 ГБ",
-            downloads: "5.7K",
-            file: "games/game5.rbxl",
-            thumb: "🐉"
-        },
-        {
-            id: 6,
-            title: "Кибер-арена",
-            genre: "shooter",
-            size: "890 МБ",
-            downloads: "4.2K",
-            file: "games/game6.rbxl",
-            thumb: "🤖"
-        }
+    // ----- симуляция загрузки (спиннер + прогресс) -----
+    let progress = 0;
+    const progressBar = document.getElementById('progressBar');
+    const loadingTip = document.getElementById('loadingTip');
+    const tips = [
+        'перья настраиваются...',
+        'клюв калибруется...',
+        'крылья синхронизируются...',
+        'голубиная магия активирована ✅'
     ];
 
-    let currentFilter = 'all';
-    let currentSearch = '';
+    function simulateLoading() {
+        if (progress >= 100) {
+            // скрываем загрузку, показываем меню
+            document.getElementById('loaderScreen').style.display = 'none';
+            const main = document.getElementById('mainScreen');
+            main.classList.remove('hidden-state');
+            // принудительно запускаем fade-up для элементов
+            document.querySelectorAll('#mainScreen .fade-up').forEach(el => {
+                el.classList.add('visible');
+            });
+            return;
+        }
+        progress += Math.random() * 12 + 3;
+        if (progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+        // меняем подсказки
+        const idx = Math.min(Math.floor(progress / 25), tips.length - 1);
+        loadingTip.textContent = tips[idx];
+        setTimeout(simulateLoading, 180 + Math.random() * 200);
+    }
 
-    function renderGames() {
-        const grid = document.getElementById('gameGrid');
-        const filtered = games.filter(g => {
-            const matchGenre = currentFilter === 'all' || g.genre === currentFilter;
-            const matchSearch = g.title.toLowerCase().includes(currentSearch.toLowerCase());
-            return matchGenre && matchSearch;
-        });
+    // запускаем загрузку после рендера
+    window.addEventListener('load', () => {
+        setTimeout(simulateLoading, 400);
+    });
 
-        if (filtered.length === 0) {
-            grid.innerHTML = `
-                <div style="grid-column:1/-1; text-align:center; color:#666; padding:60px 0;">
-                    🔍 Ничего не найдено<br>
-                    <span style="font-size:14px;">Попробуйте изменить фильтр или поиск</span>
-                </div>
-            `;
+    // ----- логика меню и игр -----
+    let selectedGame = null;
+    let confirmTimer = null;
+    let countdown = 10;
+
+    const confirmBox = document.getElementById('confirmBox');
+    const confirmText = document.getElementById('confirmText');
+    const countdownSpan = document.getElementById('countdownTimer');
+    const gameResult = document.getElementById('gameResult');
+    const resultMessage = document.getElementById('resultMessage');
+    const gameProgress = document.getElementById('gameProgress');
+
+    function launchGame(gameId) {
+        // отменяем старый таймер
+        if (confirmTimer) {
+            clearInterval(confirmTimer);
+            confirmTimer = null;
+        }
+        selectedGame = gameId;
+        const names = {
+            clicker: 'Голубь-кликер',
+            snake: 'Голубь-змейка',
+            pigeon: 'Полет голубя',
+            memory: 'Голубиная память'
+        };
+        confirmText.textContent = `❓ Действительно хотите поиграть в «${names[gameId] || gameId}»?`;
+        confirmBox.classList.remove('hidden-state');
+        // анимация появления
+        confirmBox.style.animation = 'none';
+        void confirmBox.offsetHeight;
+        confirmBox.style.animation = 'menuFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+
+        // скрываем предыдущий результат
+        gameResult.classList.add('hidden-state');
+
+        // запускаем обратный отсчёт
+        countdown = 10;
+        countdownSpan.textContent = countdown;
+        confirmTimer = setInterval(() => {
+            countdown -= 1;
+            countdownSpan.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(confirmTimer);
+                confirmTimer = null;
+                confirmGame(true);
+            }
+        }, 1000);
+    }
+
+    function confirmGame(choice) {
+        if (confirmTimer) {
+            clearInterval(confirmTimer);
+            confirmTimer = null;
+        }
+        confirmBox.classList.add('hidden-state');
+
+        if (!choice) {
+            // нет — просто закрываем
             return;
         }
 
-        grid.innerHTML = filtered.map(g => `
-            <div class="game-card" data-genre="${g.genre}">
-                <div class="game-thumb">${g.thumb}</div>
-                <div class="game-title">${g.title}</div>
-                <div class="game-meta">
-                    <span>📦 ${g.size}</span>
-                    <span>⬇️ ${g.downloads}</span>
-                </div>
-                <a href="${g.file}" download class="btn-download">
-                    ⬇️ Скачать .rbxl
-                </a>
-            </div>
-        `).join('');
+        // ДА — запускаем игру
+        const gameNames = {
+            clicker: '🖱️ Голубь-кликер',
+            snake: '🐍 Голубь-змейка',
+            pigeon: '🕊️ Полет голубя',
+            memory: '🧠 Голубиная память'
+        };
+        const messages = {
+            clicker: 'Кликай по голубю! Счёт растёт.',
+            snake: 'Собирай зёрна, не врезайся в стену.',
+            pigeon: 'Управляй голубем, собирай монетки.',
+            memory: 'Запоминай пары карт с голубями.'
+        };
+        resultMessage.textContent = `🎮 ${gameNames[selectedGame] || selectedGame}\n${messages[selectedGame] || 'Игра запущена.'}`;
+        gameResult.classList.remove('hidden-state');
+        gameResult.style.animation = 'none';
+        void gameResult.offsetHeight;
+        gameResult.style.animation = 'menuFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+
+        // прогресс-бар "запуска"
+        let p = 0;
+        const interval = setInterval(() => {
+            p += Math.random() * 8 + 2;
+            if (p >= 100) {
+                p = 100;
+                clearInterval(interval);
+                resultMessage.textContent = `✅ ${gameNames[selectedGame] || selectedGame} запущена! 🕊️`;
+                // небольшой эффект
+                gameProgress.style.background = 'linear-gradient(90deg, #22c55e, #4ade80)';
+            }
+            gameProgress.style.width = p + '%';
+        }, 150);
     }
 
-    function filterGames(genre) {
-        currentFilter = genre;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        event.target.classList.add('active');
-        renderGames();
+    function resetToMenu() {
+        gameResult.classList.add('hidden-state');
+        gameProgress.style.width = '0%';
+        gameProgress.style.background = 'linear-gradient(90deg, #ef4444, #f87171)';
+        // также скрываем confirm если висит
+        confirmBox.classList.add('hidden-state');
+        if (confirmTimer) {
+            clearInterval(confirmTimer);
+            confirmTimer = null;
+        }
     }
 
-    function searchGames() {
-        currentSearch = document.getElementById('searchInput').value;
-        renderGames();
-    }
-
-    // Первый рендер
-    renderGames();
+    // если пользователь кликнул вне диалога — можно закрыть, но мы не делаем
+    // авто-закрытие по клику на фон — опустим для простоты
 </script>
 
 </body>
