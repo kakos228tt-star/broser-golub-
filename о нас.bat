@@ -3,7 +3,6 @@ chcp 65001 > nul
 title 🕊️ О нас — Pigeon Projects
 cls
 
-echo.
 echo ************************************
 echo *       🕊️  PIGEON PROJECTS        *
 echo *         о нас / about            *
